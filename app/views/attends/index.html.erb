@@ -1,0 +1,81 @@
+<div class="page-title">My Attended Events</div>
+<%= link_to "New Event" ,new_event_path, class: "btn btn-primary"%>
+
+
+  <div id="event_map" style="width: 700px; height: 400px;"></div>
+
+  
+  <% unless @events.empty? %>
+  <table class="table-striped">
+  <tr>
+    <th>Actions</th>
+    <th>Subject</th>
+    <th>Venue</th>
+  </tr>
+    <% @events.each do |e| %>
+      <tr class="event" lat="<%= e.latitude %>" lng="<%= e.longitude %>" id="event_<%= e.id %>">
+        <td>
+          <%= link_to 'Edit', edit_event_path(e)%>
+          <%= link_to "Del", event_path(e), method: :delete, data: { confirm: "Are you sure?" }  %>
+        </td>
+        <div  >
+          <td><%= link_to e.subject, e %> </td>
+          <td><%=e.venue%></td>
+        </div>
+      </tr>
+    <% end %>
+  </table>
+  <% else %>
+    No events
+  <% end %>
+  
+  <script src="https://maps.googleapis.com/maps/api/js"></script>
+  <%= javascript_tag do %>
+  var center = {
+    lat: 43.6442467, 
+    lng: -79.3769732 
+  };
+  
+  var markers = [];
+  var infoWindowContent =[];
+  <% @events.each do |e|%>
+    <% if e.latitude.blank? || e.longitude.blank? %>
+      <% next %>
+    <% end %>
+     markers.push({"subject":"<%= e.subject %>","latitude":"<%= e.latitude %>","longitude":"<%= e.longitude %>","tag_id":"event_<%= e.id %>"});
+     infoWindowContent.push('<div><%= link_to e.subject, e %></div>');
+  <% end %>
+  
+  var map = new google.maps.Map(document.getElementById('event_map'), { // #sampleに地図を埋め込む
+     center: center,
+     zoom: 13 
+  });
+  
+  var infoWindow = new google.maps.InfoWindow();
+
+  for( i = 0; i < markers.length; i++ ) {
+     var position = new google.maps.LatLng(markers[i]["latitude"], markers[i]["longitude"]);
+        
+        marker = new google.maps.Marker({
+            position: position,
+            map: map,
+            title: markers[i]["subject"],
+            tag_id: markers[i]["tag_id"]
+        });
+        
+        google.maps.event.addListener(marker, 'click', (function(marker, i) {
+            return function() {
+                var current_element = "#"+marker["tag_id"];
+                //console.log(current_element);
+                $(".event").css("background-color","");
+                $(current_element).css("background-color","yellow");
+                infoWindow.setContent(infoWindowContent[i]);
+                infoWindow.open(map, marker);
+            }
+        })(marker, i));
+  }
+
+  <% end %>
+  
+  
+

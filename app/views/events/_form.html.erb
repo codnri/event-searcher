@@ -1,0 +1,72 @@
+<div class='row'>
+  <div class='col-md-12'>
+    <%= form_for( @event,
+    :html => {class: "form-horizontal", role: "form"}) do |f| %>
+      <% if @event.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(@event.errors.count, "error") %>
+          prevented this event from being saved:</h2>
+
+          <ul>
+          <% @event.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class='form-group'>
+        <div class='control-label col-md-2'>
+          <%= f.label :subject, "subject" %>
+        </div>
+        <div class='col-md-10'>
+          <%= f.text_field :subject, class: 'form-control' %>
+        </div>
+      </div>
+
+      <div class='form-group'>
+        <div class='control-label col-md-2'>
+          <%= f.label :description, "description" %><br>
+        </div>
+        <div class='col-md-10'>
+          <%= f.text_area :description, class: 'form-control', rows: "10" %>
+        </div>
+      </div>
+      <div class='form-group'>
+        <div class='control-label col-md-2'>
+          <%= f.label :venue, "venue" %>
+        </div>
+        <div class='col-md-10'>
+          <%= f.text_field :venue, class: 'form-control' %>
+        </div>
+      </div>
+
+      <div class='form-group'>
+        <div class='control-label col-md-2'>
+          <%= f.label :event_date, "event_date" %>
+        </div>
+        <div class='col-md-10'>
+          <%= f.text_field :event_date,value: DateTime.now , class: 'form-control' %>
+        </div>
+      </div>
+      
+      <div class='form-group'>
+        <div class='control-label col-md-2'>
+          <%= f.label :event_price, "event_price" %>
+        </div>
+        <div class='col-md-10'>
+          <%= f.text_field :event_price, class: 'form-control' %>
+        </div>
+      </div>
+      
+
+
+      <div class='form-group'>
+        <div class='col-md-offset-2 col-md-10'>
+          <%= f.submit class: 'btn btn-success btn-lg' %>
+          <%= link_to "Cancel", :back, class: 'btn btn-info btn-md float-right' %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

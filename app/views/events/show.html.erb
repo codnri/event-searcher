@@ -1,0 +1,23 @@
+<div class="page-title">subject: <%= @event.subject %></div>
+
+<div class='row'>
+  <div class='col-md-6 border'>
+    
+    <div class='contents'>
+      description: <%= @event.description %><br>
+      event_date: <%= @event.event_date %><br>
+      event_price: <%= @event.event_price %><br>
+      venue: <%= @event.venue %><br>
+    </div>
+    <%= link_to 'Back', root_path,class: "btn btn-light" %>
+    <%= link_to 'Edit', edit_event_path(@event), class: "btn btn-default btn-info" %>
+    <%= link_to 'Delete', event_path(@event), method: :delete, data: { confirm: "Are you sure?"},class: 'btn btn-default btn-danger float-right' %>
+    
+    <%# if @event.user_id != current_user.id %>
+    <% unless current_user.has_attended?(@event.id) %>
+      <%= link_to 'Attend', new_event_attend_path(@event), class: "btn btn-default btn-info" %>
+    <% end %>
+    <%# end %>
+    
+  </div>
+</div>
