@@ -46,16 +46,18 @@
           <%= f.label :event_date, "event_date" %>
         </div>
         <div class='col-md-10'>
-          <%= f.text_field :event_date,value: DateTime.now , class: 'form-control' %>
+          <%#= f.text_field :event_date,value: DateTime.now , class: 'form-control' %>
+          <%= f.text_field :event_date, data: { :date_format => 'YYYY/MM/DD hh:mm' }, class: 'form-control datetimepicker', placeholder: 'YYYY/MM/DD hh:mm:ss' %>
+
         </div>
       </div>
       
       <div class='form-group'>
         <div class='control-label col-md-2'>
-          <%= f.label :event_price, "event_price" %>
+          <%= f.label :event_price, "event_price ($)" %>
         </div>
         <div class='col-md-10'>
-          <%= f.text_field :event_price, class: 'form-control' %>
+          <%= f.text_field :event_price, class: 'form-control', value: (f.object.event_price || 0)/100 %>
         </div>
       </div>
       

@@ -27,7 +27,7 @@ class AttendsController < ApplicationController
     begin
     
     
-      Stripe::Charge.create(
+      charge = Stripe::Charge.create(
         customer: customer, #stripeTokenはStripeサーバから返されるレスポンストークン
         currency: 'cad',
         description: description,
@@ -52,6 +52,8 @@ class AttendsController < ApplicationController
         ) if params[:card_last4]
       
       current_user.save
+      
+      @attend.stripe_id = charge.id
       @attend.save
       
       flash.notice = "Thanks for purchasing"
@@ -69,16 +71,17 @@ class AttendsController < ApplicationController
   end
   
   def show
+    @attend = Attend.find(params[:id])
     #export a PDF file of invoice
-    # respond_to do |format|
-    #   format.pdf {
-    #     send_data(@charge.receipt.render ,
-    #               filename: "#{@charge.id}-store-receipt.pdf",
-    #               type: "application/pdf",
-    #               disposition: :attachment # :inline -> You can open the pdf withing browser
-    #               )
-    #   }
-    # end
+    respond_to do |format|
+      format.pdf {
+        send_data(@attend.receipt.render ,
+                  filename: "#{@attend.id}-store-receipt.pdf",
+                  type: "application/pdf",
+                  disposition: :attachment # :inline -> You can open the pdf within browser
+                  )
+      }
+    end
   end
   def destroy
   end

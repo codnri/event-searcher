@@ -1,6 +1,7 @@
 Rails.application.routes.draw do
-  devise_for :users
-  
+  # devise_for :users
+  devise_for :users, controllers: { registrations: 'users/registrations' }
+
   mount StripeEvent::Engine, at: '/webhooks/stripe' # provide a custom path
  
   resources :users
@@ -9,7 +10,8 @@ Rails.application.routes.draw do
   resources :attends
   
   resources :events do
-    resources :attends
+  resources :attends
+  
     #get '/events/:event_id/attends/subscribe', to: 'attends#subscribe'
 
   end

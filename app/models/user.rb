@@ -17,8 +17,23 @@ class User < ApplicationRecord
   end
   
   def has_attended?(event_id)
-    attends = self.attends
-    attends.find { |a| a.event_id == event_id }
+    attend = self.attends.where(event_id: event_id).first
   end
+  
+  # # allow users to update their accounts without passwords
+  # def update_without_current_password(params, *options)
+  #   p "*******^----------***********"
+  #   p params.inspect
+  #   params.delete(:current_password)
+ 
+  #   if params[:password].blank? && params[:password_confirmation].blank?
+  #     params.delete(:password)
+  #     params.delete(:password_confirmation)
+  #   end
+ 
+  #   result = update_attributes(params, *options)
+  #   clean_up_passwords
+  #   result
+  # end
   
 end

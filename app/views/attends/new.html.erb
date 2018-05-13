@@ -4,7 +4,7 @@
   <div>subject: <%= @attend.event.subject %></div>
   <div>time: <%= @attend.event.event_date %></div>
   <div>venue: <%= @attend.event.venue %></div>
-  <div>price: <%= @attend.event.event_price %></div>
+  <div>price: <%= number_to_currency(@attend.event.event_price/100) %></div>
   
   
 </div>

@@ -1,9 +1,16 @@
 class EventsController < ApplicationController
   before_action :set_event, only: [:show, :edit, :update, :destroy]
-    
+  
 
   def index
+    if search_word =  params[:search]
+      @events = Event.where("subject LIKE :word OR description LIKE :word", word: "\%#{search_word}\%")  
+      
+      # テーブル名.where("カラム1 LIKE :hoge OR カラム2 LIKE :hoge", hoge: "\%#{検索値}\%")
+
+    else
     @events = Event.all
+    end
   end
   
   def new
@@ -23,6 +30,7 @@ class EventsController < ApplicationController
     p current_user
     @event = current_user.events.new(event_params)
     # @event = Event.new(event_params)
+    convert_dollar_to_cent
     if @event.save
       flash.notice = "Event has been created successfully"
       redirect_to event_path @event
@@ -36,6 +44,7 @@ class EventsController < ApplicationController
     @event = Event.find(params[:id])
     #@event = current_user.events.new
     # @event = Event.new(event_params)
+    convert_dollar_to_cent
     if @event.update(event_params)
       flash.notice = "Event has been updated successfully"
       redirect_to event_path @event
@@ -62,5 +71,9 @@ class EventsController < ApplicationController
 
     def set_event
         @event = Event.find(params[:id])
+    end
+    
+    def convert_dollar_to_cent
+      @event.event_price = @event.event_price*100
     end
 end
