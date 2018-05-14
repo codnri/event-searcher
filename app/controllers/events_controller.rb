@@ -27,9 +27,8 @@ class EventsController < ApplicationController
   
     
   def create
-    p current_user
+
     @event = current_user.events.new(event_params)
-    # @event = Event.new(event_params)
     convert_dollar_to_cent
     if @event.save
       flash.notice = "Event has been created successfully"
@@ -41,11 +40,9 @@ class EventsController < ApplicationController
   end
   
   def update
-    @event = Event.find(params[:id])
-    #@event = current_user.events.new
-    # @event = Event.new(event_params)
+    @event.attributes = event_params
     convert_dollar_to_cent
-    if @event.update(event_params)
+    if @event.save
       flash.notice = "Event has been updated successfully"
       redirect_to event_path @event
     else
@@ -59,7 +56,7 @@ class EventsController < ApplicationController
     #@event = Event.find(params[:id])
 
     @event.destroy
-    flash.notice= "Exercise has been deleted"
+    flash.notice= "Event has been deleted"
     redirect_to root_path
   end
   
@@ -74,6 +71,8 @@ class EventsController < ApplicationController
     end
     
     def convert_dollar_to_cent
-      @event.event_price = @event.event_price*100
+      @event.event_price = @event.event_price * 100
     end
+    
+    
 end

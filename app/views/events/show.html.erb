@@ -10,16 +10,17 @@
       venue: <%= @event.venue %><br>
     </div>
     <%= link_to 'Back', root_path,class: "btn btn-light" %>
-    <%= link_to 'Edit', edit_event_path(@event), class: "btn btn-default btn-info" %>
-    <%= link_to 'Delete', event_path(@event), method: :delete, data: { confirm: "Are you sure?"},class: 'btn btn-default btn-danger float-right' %>
     
-    <%# if @event.user_id != current_user.id %>
-    <% if attend = current_user.has_attended?(@event.id) %>
-      <%= link_to "Download invoice", attend_path(attend, format: :pdf),class: "btn btn-default btn-warning"%>
+    <% if current_user.is_event_owner?(@event.id) %>
+      <%= link_to 'Edit', edit_event_path(@event), class: "btn btn-default btn-info" %>
+      <%= link_to 'Delete', event_path(@event), method: :delete, data: { confirm: "Are you sure?"},class: 'btn btn-default btn-danger float-right' %>
     <% else %>
-      <%= link_to 'Attend', new_event_attend_path(@event), class: "btn btn-default btn-info" %>
+      <% if attend = current_user.has_attended?(@event.id) %>
+        <%= link_to "Download invoice", attend_path(attend, format: :pdf),class: "btn btn-default btn-warning"%>
+      <% else %>
+        <%= link_to 'Attend', new_event_attend_path(@event), class: "btn btn-default btn-info" %>
+      <% end %>
     <% end %>
-    <%# end %>
     
   </div>
 </div>

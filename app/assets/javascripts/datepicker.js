@@ -1,10 +1,11 @@
 $(document).ready(function(){
-  //何かしらの処理
-  // $(".datetimepicker").datetimepicker();
-  $(".datetimepicker").datetimepicker({});
   
+  $('#datetimepicker1').datetimepicker({
+        format: 'YYYY-MM-DD HH:mm:ss'
+    });
+
 });
+
 // $(function () {
-//     $('.datetimepicker').datetimepicker();
+//       $('#datetimepicker').datetimepicker();
 // });
-  

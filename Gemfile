@@ -33,6 +33,12 @@ gem 'jquery-rails'
 gem 'geocoder'
 gem 'receipts', '~> 0.1.3'
 
+#datepicker
+gem 'bootstrap4-datetime-picker-rails'
+gem 'momentjs-rails', '~> 2.17', '>= 2.17.1'
+gem "font-awesome-rails"
+
+
 #date-time picker
 # gem 'momentjs-rails', '>= 2.9.0'
 # gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'

@@ -45,11 +45,24 @@
         <div class='control-label col-md-2'>
           <%= f.label :event_date, "event_date" %>
         </div>
-        <div class='col-md-10'>
+        <!--<div class='col-md-10'>-->
           <%#= f.text_field :event_date,value: DateTime.now , class: 'form-control' %>
-          <%= f.text_field :event_date, data: { :date_format => 'YYYY/MM/DD hh:mm' }, class: 'form-control datetimepicker', placeholder: 'YYYY/MM/DD hh:mm:ss' %>
+          <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+            <%= f.text_field :event_date, data: { date_target: "#datetimepicker1"}, class: "form-control datetimepicker-input", placeholder: 'YYYY-MM-DD HH:mm:ss' %>
+              <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+              </div>
+          </div>
+               <!--<div class="input-group date" id="datetimepicker1" data-target-input="nearest">-->
+               <!--     <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>-->
+               <!--     <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">-->
+               <!--         <div class="input-group-text"><i class="fa fa-calendar"></i></div>-->
+               <!--     </div>-->
+               <!-- </div>-->
 
-        </div>
+        <!--</div>-->
+
+        
       </div>
       
       <div class='form-group'>
