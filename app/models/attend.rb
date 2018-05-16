@@ -1,6 +1,6 @@
 class Attend < ApplicationRecord
-  belongs_to :user
-  belongs_to :event
+  belongs_to :user, foreign_key: 'user_id'
+  belongs_to :event, foreign_key: 'event_id'
   validates :event_id, presence: true
   validates :user_id, presence: true
   

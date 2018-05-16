@@ -9,8 +9,7 @@ Rails.application.routes.draw do
   
   root to: "events#index"
 
-  # root "/users/sign_up"
-  # get "/users/sign_up" => "users/registrations#new"
+
   
   
   mount StripeEvent::Engine, at: '/webhooks/stripe' # provide a custom path
@@ -22,8 +21,6 @@ Rails.application.routes.draw do
   
   resources :events do
     resources :attends
-  
-    #get '/events/:event_id/attends/subscribe', to: 'attends#subscribe'
 
   end
   # resources :events do
