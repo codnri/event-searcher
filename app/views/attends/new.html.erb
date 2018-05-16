@@ -1,66 +1,76 @@
-<div class="page-title">Attend this event !</div>
-
-<div class="event_content">
-  <div>subject: <%= @attend.event.subject %></div>
-  <div>time: <%= @attend.event.event_date %></div>
-  <div>venue: <%= @attend.event.venue %></div>
-  <div>price: <%= number_to_currency(@attend.event.event_price/100) %></div>
+<div class="container">
+  <div class="page-title">Attend this event !</div>
   
-  
+    <div class="row attend_event">
+      <!--<div>subject: <%= @attend.event.subject %></div>-->
+      <!--<div>time: <%= @attend.event.event_date %></div>-->
+      <!--<div>venue: <%= @attend.event.venue %></div>-->
+      <!--<div>price: <%= number_to_currency(@attend.event.event_price/100) %></div>-->
+       <%= render 'shared/event_content' , { event: @attend.event }%>
+    
+      
+    </div>
+    
+    <h2 class="payment">Pay with Credit Card</h2>
+    
+    <div class="row">
+    <div class="col-xs-10 col-md-8 col-md-offset-1">
+    
+    <% if current_user.card_last4? %>
+      <%= form_tag event_attends_path, id: "existing-card" do %>  
+        <p>Pay with existing card:</p>
+        <div><strong>Card on file:</strong><%= current_user.card_brand %> (**** **** **** <%= current_user.card_last4 %>)</div>
+        <div><strong>Expiration:</strong><%= current_user.card_exp_month %> / <%= current_user.card_exp_year %></div>
+        <!--<p>or <%#= link_to "add a new card", "#", class: "show-card-form" %></p>-->
+            <%= hidden_field_tag :user_id, @attend.user_id %>
+            <%= hidden_field_tag :event_id, @attend.event_id %>
+        <br/>    
+        <input type="submit" class="submit btn btn-lg btn-danger" value="Submit Payment">
+        <%= link_to 'Cancel', :back , class: "btn btn-md btn-info pull-right"%>
+    
+      <% end %>
+    <% end %>
+    
+    <%= form_tag event_attends_path, id: "payment-form", style: (current_user.card_last4? ? "display:none" : nil ) do %>
+    <!--<%#= form_for [ @attend.event, @attend ], id: "payment-form", style: (current_user.card_last4? ? "display:none" : nil ) do %>  -->
+    <!--<%#= form_for [@attend.event, @attend], id: "payment-form", style: (current_user.card_last4? ? "display:none" : nil ) do |f| %>  -->
+      <span class="payment-errors"></span>
+    
+      <div class="form-row">
+        <label>
+          <span>Card Number</span>
+          <input type="text" size="20" data-stripe="number" value="4242 4242 4242 4242">
+        </label>
+      </div>
+    
+      <div class="form-row">
+        <label>
+          <span>Expiration (MM/YY)</span>
+          <input type="text" size="2" data-stripe="exp_month" value="12">
+          <span> / </span>
+          <input type="text" size="2" data-stripe="exp_year" value="20">
+        </label>
+      </div>
+    
+      <div class="form-row">
+        <label>
+          <span>CVC</span>
+          <input type="text" size="4" data-stripe="cvc" value="123">
+        </label>
+      </div>
+    
+      <%= hidden_field_tag :user_id, @attend.user_id %>
+      <%= hidden_field_tag :event_id, @attend.event_id %>
+      <!--<%#= f.hidden_field :user_id %>-->
+      <!--<%#= f.hidden_field :event_id %>-->
+      <!--<%#= f.submit "Submit Payment",class:"submit btn btn-lg btn-danger" %>-->
+      <!--<%# end %>-->
+      <br/>
+      <input type="submit" class="submit btn btn-lg btn-danger" value="Submit Payment">
+      
+      <%= link_to 'Cancel', :back , class: "btn btn-md btn-info float-right"%>
+    <% end %>
+    
+    </div>
+  </div>
 </div>
-
-<h2>Pay with Credit Card</h3>
-
-<% if current_user.card_last4? %>
-  <%= form_tag event_attends_path, id: "existing-card" do %>  
-    <p>Pay with existing card:</p>
-    <div><strong>Card on file:</strong><%= current_user.card_brand %> (**** **** **** <%= current_user.card_last4 %>)</div>
-    <div><strong>Expiration:</strong><%= current_user.card_exp_month %> / <%= current_user.card_exp_year %></div>
-    <!--<p>or <%#= link_to "add a new card", "#", class: "show-card-form" %></p>-->
-        <%= hidden_field_tag :user_id, @attend.user_id %>
-        <%= hidden_field_tag :event_id, @attend.event_id %>
-    <input type="submit" class="submit" value="Submit Payment">
-
-  <% end %>
-<% end %>
-
-<%= form_tag event_attends_path, id: "payment-form", style: (current_user.card_last4? ? "display:none" : nil ) do %>
-<!--<%#= form_for [ @attend.event, @attend ], id: "payment-form", style: (current_user.card_last4? ? "display:none" : nil ) do %>  -->
-<!--<%#= form_for [@attend.event, @attend], id: "payment-form", style: (current_user.card_last4? ? "display:none" : nil ) do |f| %>  -->
-  <span class="payment-errors"></span>
-
-  <div class="form-row">
-    <label>
-      <span>Card Number</span>
-      <input type="text" size="20" data-stripe="number" value="4242 4242 4242 4242">
-    </label>
-  </div>
-
-  <div class="form-row">
-    <label>
-      <span>Expiration (MM/YY)</span>
-      <input type="text" size="2" data-stripe="exp_month" value="12">
-      <span> / </span>
-      <input type="text" size="2" data-stripe="exp_year" value="20">
-    </label>
-  </div>
-
-  <div class="form-row">
-    <label>
-      <span>CVC</span>
-      <input type="text" size="4" data-stripe="cvc" value="123">
-    </label>
-  </div>
-
-  <%= hidden_field_tag :user_id, @attend.user_id %>
-  <%= hidden_field_tag :event_id, @attend.event_id %>
-  <!--<%#= f.hidden_field :user_id %>-->
-  <!--<%#= f.hidden_field :event_id %>-->
-  <!--<%#= f.submit "Submit Payment",class:"submit btn btn-lg btn-danger" %>-->
-  <!--<%# end %>-->
-  
-  <input type="submit" class="submit btn btn-lg btn-danger" value="Submit Payment">
-  
-  <%= link_to 'Cancel', :back , class: "btn btn-md btn-info float-right"%>
-<% end %>
-

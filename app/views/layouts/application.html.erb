@@ -8,22 +8,21 @@
     <%#= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'https://js.stripe.com/v2','data-turbolinks-track': 'reload' %>
     <%= tag :meta, name: "stripe-public-key", content: Rails.application.secrets.stripe_public_key %>
-    <%# stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker-standalone.css' %>
-    <%#= stylesheet_link_tag 'https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js' %>
 
   </head>
 
   <body>
 
     <%= render 'layouts/header'%>
+    
     <div class="container">
       <% flash.each do |key, message| %>
           <div class="text-center alert alert-<%= key == 'notice' ? 'success' : 'danger' %>">
             <%= message %>
           </div>
       <% end %>
-
-      <%= yield %>
     </div>
+    <%= yield %>
+    
   </body>
 </html>

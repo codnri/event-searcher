@@ -1,5 +1,9 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-  <a class="navbar-brand" href="/">Event Searcher</a>
+  <% if user_signed_in? %>
+    <a class="navbar-brand" href="/">Event Searcher</a>
+  <% else %>
+    <%= link_to "Event Searcher", new_user_session_path, class:"navbar-brand" %>
+  <% end %>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -7,7 +11,8 @@
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
       
-      <% unless user_signed_in? %>
+      <% if false %>
+      <%# unless user_signed_in? %>
       <li class="nav-item">
         <%= link_to "Log in", new_user_session_path, class: "nav-link" %>
       </li>
@@ -23,6 +28,10 @@
         <!--<a class="nav-link" href="#">My Events</a>-->
         <%= link_to "My Attended Events", attends_path, class:"nav-link"%>
       </li>
+      
+      <li class="nav-item">
+        <%= link_to "Hold My Event", new_event_path, class:"nav-link"%>
+      </li>
 
       <li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -33,6 +42,7 @@
           <%= link_to "Profile", edit_user_registration_path, class: "dropdown-item" %>
           <div class="dropdown-divider"></div>
           <%= link_to "Log Out", destroy_user_session_path, method: :delete, class: "dropdown-item"  %>
+          
         </div>
       </li>
       <% end %>
@@ -42,7 +52,7 @@
 
     <!--<form class="form-inline my-2 my-lg-0">-->
       <%= form_tag events_path, :method => 'get',class:"form-inline my-2 my-lg-0" do %>
-      <%= text_field_tag :search, params[:search], class:"form-control mr-sm-2", placeholder:"Search"%>
+      <%= text_field_tag :search, params[:search], class:"form-control mr-sm-2", placeholder:"Search Events"%>
       <!--<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
       
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

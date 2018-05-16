@@ -1,5 +1,6 @@
 class AttendsController < ApplicationController
-  
+
+  before_action :authenticate_user!  
   
   def index
     @attends = current_user.attends
@@ -12,6 +13,8 @@ class AttendsController < ApplicationController
     #attends/new.html.erbのフォームがクリックされた後、subscriptions.jsによって処理され、Stripeサーバから結果を受け取った後にcreateのpathにPOSTされてくる
     # chech whether current_user is an existing customer or not, 
     #then get stripe's customer (an instance of Stripe::Customer )
+    p "params[:stripeToken]"
+    p params[:stripeToken]
     customer = current_user.stripe_customer(params[:stripeToken])
     
     @attend = current_user.attends.new()
@@ -67,7 +70,8 @@ class AttendsController < ApplicationController
   
   def new
     @attend = current_user.attends.new
-    @attend.event_id = params[:event_id]
+    @event = Event.find(params[:event_id])
+    @attend.event = @event
   end
   
   def show
@@ -78,7 +82,8 @@ class AttendsController < ApplicationController
         send_data(@attend.receipt.render ,
                   filename: "#{@attend.id}-store-receipt.pdf",
                   type: "application/pdf",
-                  disposition: :attachment # :inline -> You can open the pdf within browser
+                  # disposition: :attachment # :inline -> You can open the pdf within browser
+                  disposition: :inline
                   )
       }
     end

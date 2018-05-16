@@ -1,14 +1,12 @@
-<div class="page-title">subject: <%= @event.subject %></div>
-
-<div class='row'>
-  <div class='col-md-6 border'>
+<div class="container">
+  <div class="page-title"><%= @event.subject %></div>
+    <div class='row'>
+     <%= render 'shared/event_content' , { event: @event }%>
+    </div>  
+    <br>
     
-    <div class='contents'>
-      description: <%= @event.description %><br>
-      event_date: <%= @event.event_date %><br>
-      event_price: <%= number_to_currency(@event.event_price / 100) %><br>
-      venue: <%= @event.venue %><br>
-    </div>
+    <div class='row'>
+    <div class="col-xs-12 col-md-10 col-md-offset-1">
     <%= link_to 'Back', root_path,class: "btn btn-light" %>
     
     <% if current_user.is_event_owner?(@event.id) %>
@@ -21,6 +19,6 @@
         <%= link_to 'Attend', new_event_attend_path(@event), class: "btn btn-default btn-info" %>
       <% end %>
     <% end %>
-    
+    </div>
   </div>
 </div>

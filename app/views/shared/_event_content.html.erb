@@ -1,0 +1,35 @@
+<div class="col-xs-12 col-md-10 col-md-offset-1 border">
+  <div class="col-xs-12 col-md-10">
+    <div class="col-xs-4">
+      <strong>Description:</strong>
+    </div>
+    <div class="col-xs-8 text-right">
+      <%= @event.description %>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-10">
+    <div class="col-xs-4">
+      <strong>Date:</strong>
+    </div>
+    <div class="col-xs-8 text-right">
+      <%= @event.event_date %>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-10">
+    <div class="col-xs-4">
+      <strong>Venue:</strong>
+    </div>
+    <div class="col-xs-8 text-right">
+      <%= @event.venue %>
+    </div>
+  </div>
+  <div class="col-xs-12 col-md-10">
+    <div class="col-xs-4">
+      <strong>Price:</strong>
+    </div>
+    <div class="col-xs-8 text-right price">
+      <%=  number_to_currency(@event.event_price / 100)  %>
+    </div>
+  </div>
+  <br>
+</div>

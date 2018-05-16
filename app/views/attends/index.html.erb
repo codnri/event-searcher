@@ -1,9 +1,10 @@
+<div class="container">
 <div class="page-title">My Attended Events</div>
-  <div id="event_map" style="width: 700px; height: 400px;"></div>
+  <div id="event_map" style="width: 700px; height: 400px;" class="center-block"></div>
 
   
   <% unless @events.empty? %>
-  <table class="table-striped">
+  <table class="table-striped center-block" width="700px">
   <tr>
     <th>Actions</th>
     <th>Subject</th>
@@ -12,8 +13,10 @@
     <% @events.each do |e| %>
       <tr class="event" lat="<%= e.latitude %>" lng="<%= e.longitude %>" id="event_<%= e.id %>">
         <td>
-          <%= link_to 'Edit', edit_event_path(e)%>
-          <%= link_to "Del", event_path(e), method: :delete, data: { confirm: "Are you sure?" }  %>
+          <% if current_user.is_event_owner?(e.id) %>
+            <%= link_to 'Edit', edit_event_path(e)%>
+            <%= link_to "Del", event_path(e), method: :delete, data: { confirm: "Are you sure?" }  %>
+          <% end %>
         </td>
         <div  >
           <td><%= link_to e.subject, e %> </td>
@@ -27,3 +30,4 @@
   <% end %>
   
   <%= render "shared/map"%>
+</div>

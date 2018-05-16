@@ -1,18 +1,13 @@
 Rails.application.routes.draw do
 
   # devise_for :users
+  
+
   devise_for :users, controllers: { registrations: 'users/registrations' }
-  devise_scope :user do
-    post 'users/sign_up', to: 'devise/registrations#create'
-  end
+
   
-  # constraints ->  request { request.session[:user_id].present? } do
-  # ログインしてる時のパス
-    root to: "events#index"
-  # end
-  # ログインしてない時のパス
-  # root "users/registrations#new"
   
+  root to: "events#index"
 
   # root "/users/sign_up"
   # get "/users/sign_up" => "users/registrations#new"
@@ -26,7 +21,7 @@ Rails.application.routes.draw do
   resources :attends
   
   resources :events do
-  resources :attends
+    resources :attends
   
     #get '/events/:event_id/attends/subscribe', to: 'attends#subscribe'
 

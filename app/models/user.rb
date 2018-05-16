@@ -8,7 +8,12 @@ class User < ApplicationRecord
   
   def stripe_customer(source_id)
     if stripe_id?
-      Stripe::Customer.retrieve(stripe_id)
+      stripe_customer = Stripe::Customer.retrieve(stripe_id)
+
+      if stripe_customer.sources.empty? && source_id.present?
+        stripe_customer.sources.create({:source => source_id})
+      end
+      stripe_customer
     else
       stripe_customer = Stripe::Customer.create(email: email, source: source_id)
       update(stripe_id: stripe_customer.id) # save the returned stripe_customer.id to the User record

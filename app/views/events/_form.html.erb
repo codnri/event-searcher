@@ -43,31 +43,22 @@
 
       <div class='form-group'>
         <div class='control-label col-md-2'>
-          <%= f.label :event_date, "event_date" %>
+          <%= f.label :event_date, "date" %>
         </div>
-        <!--<div class='col-md-10'>-->
+        <div class='col-md-10'>
           <%#= f.text_field :event_date,value: DateTime.now , class: 'form-control' %>
           <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
             <%= f.text_field :event_date, data: { date_target: "#datetimepicker1"}, class: "form-control datetimepicker-input", placeholder: 'YYYY-MM-DD HH:mm:ss' %>
               <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
-                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-              </div>
+              <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+            </div>
           </div>
-               <!--<div class="input-group date" id="datetimepicker1" data-target-input="nearest">-->
-               <!--     <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker1"/>-->
-               <!--     <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">-->
-               <!--         <div class="input-group-text"><i class="fa fa-calendar"></i></div>-->
-               <!--     </div>-->
-               <!-- </div>-->
-
-        <!--</div>-->
-
-        
+        </div>
       </div>
       
       <div class='form-group'>
         <div class='control-label col-md-2'>
-          <%= f.label :event_price, "event_price ($)" %>
+          <%= f.label :event_price, "price ($)" %>
         </div>
         <div class='col-md-10'>
           <%= f.text_field :event_price, class: 'form-control', value: (f.object.event_price || 0)/100 %>

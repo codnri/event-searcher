@@ -1,5 +1,5 @@
-$(document).on("turbolinks:load",function(){
-
+// $(document).on("turbolinks:load",function(){
+$(document).ready(function(){
   stripe_public_key = $("meta[name='stripe-public-key']").attr("content"); //grab a public key from the <head> tag of HTML
   Stripe.setPublishableKey(stripe_public_key); // initialize Stripe JS library
 
@@ -18,12 +18,6 @@ $(document).on("turbolinks:load",function(){
     return false;
   });
   
-  // $(".show-card-form").on("click", function(e){
-  //   e.preventDefault();
-  //   $("#existing-card").hide();
-  //   $form.show();
-  // });
-  
 });
 
 function stripeResponseHandler(status, response) {//status, responseはcreateTokenによってセットされる
@@ -41,9 +35,9 @@ function stripeResponseHandler(status, response) {//status, responseはcreateTok
 
     // Get the token ID:
     var token = response.id;
-    console.log(response);
 
     // Insert the token ID into the form so it gets submitted to the server:
+
     $form.append($('<input type="hidden" name="stripeToken">').val(token));
     $form.append($('<input type="hidden" name="card_brand">').val(response.card.brand));
     $form.append($('<input type="hidden" name="card_exp_month">').val(response.card.exp_month));
