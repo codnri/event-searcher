@@ -25,3 +25,5 @@
 .DS_Store
 .idea
 .secret
+# Ignore encrypted secrets key file.
+config/secrets.yml.key
